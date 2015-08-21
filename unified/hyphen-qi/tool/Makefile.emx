@@ -1,0 +1,49 @@
+#
+# Makefile for EMX/gcc (dmake)
+#
+# Author:  Piet Tutelaers (rcpt@urc.tue.nl)
+# Version: 1.0 (November 1996)
+#
+
+# Compiler directives and other goodies
+CC = gcc
+DEBUG = -g
+SYSTEM = MSDOS
+CFLAGS = -D$(SYSTEM) -O $(DEBUG)
+
+PROGRAMS = c2ascii.exe diacrit.exe hyphenate.exe wordmatch.exe \
+           wordmerge.exe wordsort.exe wordints.exe worddiff.exe
+
+all: $(PROGRAMS)
+
+c2ascii.exe: c2ascii.o
+	$(CC) -o c2ascii.exe c2ascii.o
+.c.o:
+	$(CC) -o $*.o $(CFLAGS) -c $<
+
+diacrit.exe: diacrit.o
+	$(CC) -o diacrit.exe diacrit.o
+
+hyphenate.exe: hyphenate.o
+	$(CC) -o hyphenate.exe hyphenate.o
+
+wordmatch.exe: wordmatch.o
+	$(CC) -o wordmatch.exe wordmatch.o -lc
+
+wordmerge.exe: wordmerge.o string.o
+	$(CC) -o wordmerge.exe wordmerge.o string.o
+
+wordsort.exe: wordsort.o qsort.o string.o
+	$(CC) -o wordsort.exe wordsort.o qsort.o string.o
+
+wordints.exe: wordints.o string.o
+	$(CC) -o wordints.exe wordints.o string.o
+
+worddiff.exe: worddiff.o string.o
+	$(CC) -o worddiff.exe worddiff.o string.o
+
+clean:
+	rm -f *.exe *.o
+
+qsort.c: char.h
+string.c: char.h

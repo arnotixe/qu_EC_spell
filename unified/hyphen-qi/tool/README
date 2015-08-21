@@ -1,0 +1,50 @@
+This directory contains a set of tools which I use to develop the new
+hyphenation patterns for the Dutch language based upon the `Groene
+boekje 1996'. The sorting and merging tools expect ISO Latin1 sorted
+word lists. For the benefit of MSDOS users who work in ANSI the PERL
+script lat2ansi.pl is available.
+
+Overview of the available tools:
+
+c2ascii:     a very simple tool to convert 8-bits to 7-bits ASCII. If the
+             character in question has a code greater than 128 the
+	     character will be converted to ^^xx (where xx is its
+	     hexadecimal representation)
+
+diacrit:     a program that shows the ISOLatin1 character set
+
+hyphenate:   this program can generate a hyphenation dictionary by applying
+	     TeX hyphenation patterns to a dictionary
+
+hyphens.pl:  A PERL script to generate a hyphenated words given hyphenation
+	     patterns, with possible exceptions, and a list of unhyphenated
+	     words. The program correctly handles Dutch words with `apostroph'
+	     and `koppelteken'. The hyphen is represented as a high dot 
+	     because our language uses the - inside words (na-apen).
+
+latin2pc.pl: a PERL script for converting ISO Latin1 files to/from IBM PC
+	     code page 437.
+
+worddiff:    this program generates all words from wordlist one that are
+	     not present in the second wordlist (set difference)
+
+wordints:    this program generates the intersection between two wordsorted
+	     wordlists
+
+wordsort:    this program sorts a dictionary containing accents and
+	     hyphens using dictionary order (only letters and digits)
+
+wordmerge:   this program merges two or more lists of words (sorted!) into
+	     a larger dictionary (also sorted).
+
+wordmatch:   this program compares a dictionary with hyphenated words
+             against a file containing the same words. With this program
+	     you can compute how a given set of patterns behave.
+
+--Piet
+12 December 1996
+
+internet: rcpt@urc.tue.nl      __o      Piet Tutelaers
+                             _`\<,_     Computer Center       Room  RC 1.82
+phone:  +31 (0)40 2474541   (_)/ (_)    Eindhoven University of  Technology
+fax:    +31 (0)40 2434438  Save nature  P.O. Box 513, 5600 MB Eindhoven, NL

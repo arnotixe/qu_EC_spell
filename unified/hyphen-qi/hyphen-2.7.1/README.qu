@@ -1,0 +1,13 @@
+# Arno Teigseth 26 apr 2011
+# The license of all this is copyleft, GPL afferro 3
+
+
+# This program, from the hunspell.sf.net site, takes TeX hyphenation files and converts them to openoffice-files.
+
+# For TeX hyph files, see parent dir and its README.
+
+# usage to convert from out
+perl substrings.pl qu.out qu.oo-dic
+
+# Concatenate the header and the newly built openoffice .dic 
+cat hyph_qu_EC.dic.HEADER qu.oo-dic > hyph_qu_EC.dic

@@ -1,0 +1,17 @@
+# http://translate.sourceforge.net/wiki/guide/hyphenation
+patgen qi-pat.1  qi-dic.1 qu.out qi-tra
+
+# Now I need to read up a bit more on how the values for
+# hyph start, end
+# pat start, end
+#  and 
+# good, bad weight & threshold 
+#    works.
+#  
+# :puzzled
+
+# the patterns generated in the file qu.out are TeX patterns it seems.
+
+# To be used in openoffice, or to test it, they will have to be treated with some tools and packed. see hyphen-2.7.1/README.qu
+
+# Arno Teigseth 26 apr 2011

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<description xmlns="http://openoffice.org/extensions/description/2006" xmlns:d="http://openoffice.org/extensions/description/2006"  xmlns:xlink="http://www.w3.org/1999/xlink">
+
+            <version value="1.0" />
+            
+    <identifier value="org.homelinux.arno.qu-EC" />
+    
+    <registration>
+        <simple-license accept-by="admin" suppress-on-update="false" >
+            <license-text xlink:href="README.txt" lang="en-GB" />
+        </simple-license>
+    </registration>
+
+    <display-name>
+        <name lang="en">Kichwa spelling dictionary</name>
+        <name lang="no">Stavekontroll for Kichwa</name>
+        <name lang="es">Diccionario de ortografía Kichwa</name>
+    </display-name>
+    <icon>
+    <default xlink:href="hat.png" />
+    </icon>
+    <publisher>
+        <name xlink:href="http://arno.homelinux.org/" lang="en">arno.homelinux.org</name>
+    </publisher>
+    
+    <platform value="all" />
+    
+    <dependencies>
+        <OpenOffice.org-minimal-version value="3.2" d:name="OpenOffice.org 3.2" />
+    </dependencies>
+    
+</description>
+
