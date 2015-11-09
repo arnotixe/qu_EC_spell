@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<oor:component-data xmlns:oor="http://openoffice.org/2001/registry" xmlns:xs="http://www.w3.org/2001/XMLSchema" oor:name="Linguistic" oor:package="org.openoffice.Office">
+ <node oor:name="ServiceManager">
+    <node oor:name="Dictionaries">
+        <node oor:name="HunSpellDic_qu-EC" oor:op="fuse">
+            <prop oor:name="Locations" oor:type="oor:string-list">
+                <value>%origin%/qu_EC.aff %origin%/qu_EC.dic</value>
+            </prop>
+            <prop oor:name="Format" oor:type="xs:string">
+                <value>DICT_SPELL</value>
+            </prop>
+            <prop oor:name="Locales" oor:type="oor:string-list">
+                <value>qu-EC</value>
+            </prop>
+        </node>
+        <node oor:name="HyphDic_qu-EC" oor:op="fuse">
+            <prop oor:name="Locations" oor:type="oor:string-list">
+                <value>%origin%/hyph_qu_EC.dic</value>
+            </prop>
+            <prop oor:name="Format" oor:type="xs:string">
+                <value>DICT_HYPH</value>
+            </prop>
+            <prop oor:name="Locales" oor:type="oor:string-list">
+                <value>qu-EC</value>
+            </prop>
+        </node>s
+    </node>
+ </node>
+</oor:component-data>
+
+

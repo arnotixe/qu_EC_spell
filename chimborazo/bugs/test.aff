@@ -1,0 +1,16 @@
+SET UTF-8
+
+COMPOUNDFLAG /       # allow compound for this word
+COMPOUNDEND >        # words that end compounds
+COMPOUNDPERMITFLAG + # allow (stem+affix)+compound
+ONLYINCOMPOUND x     # For words only allowed in compounds
+COMPOUNDMORESUFFIXES # Allow 2-fold suffix PLUS compound
+
+# first level
+SFX v Y 1
+SFX v 0 explained//+c . # Level1
+
+# second level
+SFX c Y 2
+SFX c 0 ness//+ . # Level2
+SFX c 0 nessy/x . # Level2 only allowed in compounds

@@ -1,0 +1,87 @@
+.TH DIACRIT 1 "26 May 1993"
+.SH NAME
+diacrit \- accented ISOLatin1 characters
+.SH SYNOPSIS
+.B diacrit
+\" Example macros using fixed width font (Courier)
+.de Ex
+.sp
+.RS
+.nf
+.ft C
+..
+.de Xe
+.RE
+.sp
+.fi
+..
+
+.SH DESCRIPTION
+.PP
+The
+.B diacrit
+program shows part of the ISOLatin1 (ISO8859-1) character set if your
+terminal or terminal emulator can handle them. With X-windows this
+character set allows you to input and output these characters using a
+xterm terminal window. But in order to use them you need perhaps to set
+some defaults in your ~/.Xdefaults and ~/.login.
+.PP
+First the terminal emulator needs the ability to handle 8-bits characters
+and therefore you need to add `pass8' as argument to stty in your .login
+startup file. On some systems pass8 is not available. In that case you can
+try `cs8 -parenb -istrip' instead. See the manual page of stty(1) for more
+information.
+.Ex
+#/bin/csh
+
+#
+# terminal setup
+#
+
+unalias tset
+setenv TERM     `tset - -I -Q`
+if ( "$TERM" == vt300 || "$TERM" == vt100 ) then
+   stty crt erase ERASE1
+else if ("$TERM" == xterm) then
+   stty pass8 erase ERASE2
+   setenv LC_CTYPE iso_8859_1
+else 
+   stty erase ERASE2
+endif
+.Xe
+
+In the above script ERASE1 stands for the DEC-backspace (0x7F) and
+ERASE2 (0x08) for the Ctrl-H backspace.
+
+.PP
+You must select two ISOLatin1 fonts for Xterm. This can be done by
+adding (for example) the following two lines to your Xdefaults:
+.Ex
+xterm*font:     -*-*-medium-r-normal-*-*-130-*-*-c-*-iso8859-1
+xterm*boldfont: -*-*-bold-r-normal-*-*-130-*-*-c-*-iso8859-1
+.Xe
+
+.PP
+With the above modifications you are now able to enter an accented
+character from the last six columns of the diacrit table by using the
+Alt key in combination with the stripped character you want. If you
+want for example the i-umlaut (character 0xef) you need to press the
+Alt key and entering the o (character 0x6f).
+
+Try to input next accented dutch characters with vi (accents are put before
+the letter which need them) and verify if you can use them in regular
+expressions:
+.Ex
+Cura,coa"enaar
+ma^itresse
+r"ontgenfoto
+proc'ed'e
+.Xe
+
+.PP
+Unfortunately not all UNIX tools are 8-bit clean. For example fmt
+discards the high order bit of characters above 128. But let us hope
+that this will be cleaned up soon or later.
+
+.SH AUTHOR
+Piet Tutelaers (rcpt@urc.tue.nl)

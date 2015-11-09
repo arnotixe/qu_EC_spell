@@ -1,0 +1,393 @@
+# ----------------------------------------------------------------------------------
+#
+#    Chimborazo Quichua del Ecuador, hunspell format dictionary affix file
+#    Copyright (C) 2009 Arno Teigseth, Henry David Lara
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU Affero General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU Affero General Public License for more details.
+#
+#    You should have received a copy of the GNU Affero General Public License
+#    along with this program. See LICENSE.txt. If not, see <http://www.gnu.org/licenses/>.
+#
+#    The author(s) can be contacted at arno at teigseth dot no
+#
+# ----------------------------------------------------------------------------------
+# 
+
+# FIXMES
+# DIC for now contains "-s" for fariseo|s but should be fariseo|cuna
+# -nij now made a verb "conjugation" for "Saying ~". Correctness?
+
+# -ndij (caricuna|ndij) but not animal|ndij rather animalcuna|ndij
+# Bete-elpi ? 
+# .*l followed by lla is .*l-lla, not carcellla or something
+# Emanuel-lla//
+# carcel-lla//
+# coldel-llahuan//
+# corral-lla//
+# costal-lla//
+# Israel-lla//
+# Saul-llataj//
+
+# compas-huan//
+# Dibón-gadman (accent+man no good)
+# El-bet-elta//
+# Et-baal//
+# Ezión-geberman/
+# Ezión-geberpi/
+# I-laipish//
+# Isaac-huan//
+
+# which is correct?
+#Is-tob//
+#Is-tod//
+
+# exists?
+#Kir-hares//
+#Kir-hareset//
+
+# correct?
+# Mefi-boset//
+# Mifi-boset//
+
+# correct?
+# Quiriat-jearim//
+# Quiriat-jerarimmantaca//
+
+# 144milcunallami
+# 18mil
+# 200millonmi
+
+# ahiramitas PLURAL S?
+#belaitas//
+#amorreos//
+#arelitas//
+# asbelitas//
+#aroditas//
+#bequeritas//
+#beriaitas//
+#carmitas//
+
+
+
+# ayuda// parece ser usado como quichua, sería mejor yapana o algo?
+# ajeno// ditto?
+# achijchina o achijyachina? achijnayana? achijnicuj ? achij nina -> nicuj?
+
+# INCONSISTENT
+# bautizmo bautismo
+# aillun?
+# ajichu//
+# ajos//
+# ajushtana//vw
+# áloe
+# amaleccuna// vs amalecita// inconsistency
+# amañado//a vs amañarina//vw inconsistency
+# bulluna o bullana?
+# arbitita arbatita?
+# calabazo calabaza
+# casana cazana
+
+
+
+
+# BREAK 1
+# BREAK -
+
+# Allow checking of words on both sides of - : Mateo 10: 12-kama 16-tami will check 12 and kama separately
+# HMM FIXME doesnt work well with Abi-agar and similar words...
+
+SET UTF-8
+
+# Unified Kichwa
+# TRY akinuhstpmrclyoweñdbjgvzfqx
+
+# Chimborazo Quichua character frequence
+TRY aciunhsptmrljoeygdñqbvzáfíóéúükxw
+
+NOSUGGEST !   # Bad words, don't suggest them.
+
+FORBIDDENWORD ¤  # Bad combinations.
+
+COMPOUNDMIN 1 # Minimum length of compound words
+
+COMPOUNDBEGIN /      # start comp, all words (except accented ones) in kichwa...
+COMPOUNDMIDDLE -     # middle comp
+COMPOUNDEND >        # end comp
+COMPOUNDPERMITFLAG + # allow (stem+affix)+compound
+COMPOUNDFORBIDFLAG 1 # words not allowed in compounds, e.g. espíritu ok but not espírituka
+                     # really redundant for the words with no / specified
+ONLYINCOMPOUND x     # words allowed only in compounds, e.g. espíritu/ ok while forcing espiritu|ka = espiritu//x
+COMPOUNDMORESUFFIXES # Allow 2-fold suffix PLUS compound (as in miku/chi/nki+pash)
+
+# Don't consider dashes, apostrophes nor numbers word separators
+WORDCHARS 0123456789-'
+
+COMPOUNDRULE 1
+COMPOUNDRULE n*d*/->
+# n is "number"
+# d is "dash"
+
+# Frequently switched character groups
+REP 10
+REP ai ay
+REP ki gui
+REP wa hua
+REP k j
+REP nk ng
+REP ki qui
+REP tak taj
+REP grichi chigri
+REP kri gri
+REP s cuna
+
+# Frequently switched characters
+MAP 8
+MAP bv
+MAP ie
+MAP jk
+MAP iy
+MAP gk
+MAP gq
+MAP qk
+MAP td
+
+# VERBS
+#
+# are funny things.
+#
+# Let's try twofold suffix stripping to deal with the great flexibility of the Quichua verbs.
+# There are [at least] two major branches of verbs, "common" and "pluralized"
+#
+# 1) The common conjugations are tagged with /v:
+#   mikuna//v
+#
+# The tag /v gives "mood/direction/style" to the verb:
+# miku|RA|na/c ; miku|CHI|na/c ; miku|CHIRA|na/c and so on. This is the first level.
+# 
+# The tag /c gives time+sex to the verb:
+# miku|ra|NKI/+ ; miku|chi|RKANKI/+ ; miku|chira|RKANKICHIK/+ and so on. This is the second level (and hunspell's max for the moment).
+#
+# 2) The pluralizing inflex -na- is causing trouble because it comes BEFORE the "/v" tag suffixes, 
+#      and is not compatible with all the "/c" variants.
+#    The -na- means something like "do the verb amongst many"
+#
+# e.g. tanta|na|ku|nchik : -na- comes before ku, the "/v" variant, and nchik, the "/c" variant.
+# e.g. tanta|na|ku|sha   : -na- comes before ku, the "/v" variant, and sha is incompatible with -na-
+#
+# So since the tags run the show linearly: "/v" -implies> "/c" -implies> "/+", 
+#  all the variants under /v must be repeated under "/w". 
+# Then we can repeat only the valid -na- combinations from "/c" to the new tag "/p".
+#
+# The tag /w gives "mood/direction/style" to the verb just like /v, but points to /p tag instead, and keeps the -na-:
+# tantana|RA|na/p ; tantana|CHI|na/p ; tantana|CHIRA|na/p and so on. This is the first level.
+#
+# The tag /p gives time+sex to the verb, valid -na- combinations only:
+# tantana|ku|NCHIK/+ ; tantana|chi|CHUN/+ ; tantana|CHIKU|nchik/+ and so on. This is the second level.
+#
+# -------------------------------------------
+#
+# The + is not a morph but a compound flag, to indicate that
+#   miku|chira|RKANKICHIK/pash/chari  is an OK word, pash and chari being compounds.
+#
+
+
+# COMPOUNDS
+#
+# The order of the compounds could be checked with a grammar checker. 
+# Hunspell does not allow repetition of compound words, so that helps a bit.
+# (e.g.) mikuna/chari/chari is NOT ok.
+
+# Rules syntax
+# PFX/SFX flag stripchars(0 if none) affix condition-regex
+
+# VERBS COMMON CONJUGATIONS common first level
+SFX v Y 33
+SFX v na na//+c na            # Stem/Infinitive common
+SFX v na nij//+ na            # "Saying ~"
+SFX v na rina//+c na          # reflexive
+SFX v na rimuna//+c na        # reflexive "arriving ~ing"
+SFX v na rihuana//+c na        # reflexive ~ in my favor
+SFX v na richina//+c na       # reflexive "make ~"
+SFX v na rigrina//+c na       # reflexive "going to ~"
+SFX v na ricuna//+c na        # reflexive "constantly ~"
+SFX v na grina//+c na         # "going to ~"
+SFX v na rana//+c na          # "always ~"
+SFX v na racuna//+c na          # "always ~"
+SFX v na riyana//+c na        # "always ~"
+SFX v na cuna//+c na          # "constantly ~"
+SFX v na cumuna//+c na        # "constantly arriving doing ~"
+SFX v na cumurina//+c na      # "constantly arriving doing ~ reflexive"
+SFX v na cuchina//+c na       # "constantly make ~"
+SFX v na cugrina//+c na       # "constantly going to ~"
+SFX v na gricuna//+c na       # "constantly going to ~"
+SFX v na muna//+c na          # "arriving ~ing"
+SFX v na muhuana//+c na        # "arriving ~ing in my favor"
+SFX v na mugrina//+c na       # "going to arrive ~ing" 
+SFX v na mugrichina//+c na       # "going to arrive making ~" 
+SFX v na muchina//+c na       # "arriving making ~" 
+SFX v na mucuna//+c na        # "constantly arriving ~ing"
+SFX v na huana//+c na          # "doing ~ in my favor"
+SFX v na china//+c na         # "make ~"
+SFX v na chihuana//+c na       # "make ~ in my favor"
+SFX v na chirina//+c na       # "make ~ for oneself"
+SFX v na chicuna//+c na          # "constantly making ~"
+SFX v na chigrina//+c na      # "going to make ~"
+SFX v na grichina//+c na      # "going to make someone ~"
+SFX v na chimuna//+c na       # "arriving making ~"
+SFX v na chimucuna//+c na       # "arriving making ~"
+
+
+# VERBS COMMON CONJUGATIONS common second level
+#SFX flag strip add match
+SFX c Y 60                 #Verbs: conjugations and the like
+SFX c na na//+ na          # Infinitive singular
+SFX c na ni//+ na          # Present 1st person singular
+SFX c na ngui//+ na         # Present 2nd person singular | Future 2nd person singular/plural
+SFX c na n//+ na           # Present 3rd person singular
+SFX c na nchij//+ na       # Present 1st person plural
+SFX c na nguichij//+ na     # Present 2nd person plural
+SFX c na nguichi/x na     # Present 2nd person plural
+SFX c na ncuna//+ na       # Present 3nd person plural
+SFX c na sha//+ na         # Future 1st person singular
+SFX c na nga//+ na         # Future 3rd person singular/plural
+SFX c na ngaj//+ na         # Future 3rd person singular/plural, Personified
+SFX c na ngaraicu//+ na    # "With the purpose of ~"
+SFX c na shun//+ na        # Future / Imperative 1st person plural
+SFX c na shunchij//+ na    # Future 1st person plural ("all of us")
+SFX c na shunchi/x na      # Future 1st person plural ("all of us") j->g case flagged a in dic XXX x flag doesnt' work
+SFX c na rcani//+ na       # Past 1st person singular
+SFX c na rcangui//+ na      # Past 2nd person singular
+SFX c na rca//+ na         # Past 3rd person singular
+SFX c na rcanchij//+ na    # Past 1st person plural
+SFX c na rcanguichij//+ na  # Past 2nd person plural
+SFX c na rcacuna//+ na     # Past 3nd person plural
+SFX c na ngapaj//+ na      # for/to ~
+SFX c na shpaca//+ na      # Contitional same person
+SFX c na j//-+ na           # Personification
+SFX c na jpi//+ na       # Contitional other person FIXME diff -jpica?
+SFX c na jpica//+ na       # Contitional other person
+SFX c na rcajpi//+ na      # Conditional Past 3rd person singular
+SFX c na i//+ [^i]na       # Imperative 1st person singular not ending in "I" / Nounification
+SFX c ina i//+ ina       # Imperative 1st person singular ending in "I" / Nounification
+SFX c na yuj//+ na         # The person having nounified ~ 
+SFX c na nayay//+ na       # Causing ~ 
+SFX c na yari// na         # More Imperative 1st person singular
+SFX c na chun//+ na        # Imperative 3rd person singular / Present subjunctive
+SFX c na ichij//+ na      # Imperative 2nd person plural not ending in "I"
+SFX c na ichi/x na      # Imperative 2nd person plural not ending in "I" + ", PUES" special j->g case
+SFX c na chuncuna//+ na    # Imperative 3rd person plural
+SFX c na shcani//+ na      # Perfect 1st person singular
+SFX c na shcangui//+ na     # Perfect 2nd person singular
+SFX c na shca//+ na        # Perfect 3rd person singular
+SFX c na shcanchij//+ na   # Perfect 1st person plural
+SFX c na shcanguichij//+ na # Perfect 2nd person plural
+SFX c na shcacuna//+ na    # Perfect 3rd person plural
+SFX c na shcarca//+ na     # Plusperfect [persons?]
+SFX c na shpa//+ na        # Gerund same person.
+SFX c na shcanga//+ na     # Was going to ~
+SFX c na pasha//+ na       # POLITE Future 1st person singular
+SFX c na pangui//+ na       # POLITE Present 2nd person singular | Future 2nd person singular/plural
+SFX c na pan//+ na         # POLITE Present 3rd person singular
+SFX c na panchij//+ na     # POLITE Present 1st person plural
+SFX c na panguichij//+ na   # POLITE Present 2nd person plural
+SFX c na parcani//+ na     # POLITE Past 1rd person singular
+SFX c na parcangui//+ na    # POLITE Past 2nd person singular
+SFX c na parcanchij//+ na  # POLITE Past 2nd person plural
+SFX c na parca//+ na       # POLITE Past 3rd person singular
+SFX c na pashun//+ na      # POLITE Future 1st person plural
+SFX c na pai//+ na         # POLITE Imperative 1st person singular not ending in "I" / Nounification
+SFX c na paiari// na       # POLITE More Imperative 1st person singular
+SFX c na pachun//+ na      # POLITE Imperative 3rd person singular / Present subjunctive
+SFX c na paichij//+ na     # POLITE Imperative 2nd person plural
+SFX c na pachuncuna//+ na  # POLITE Imperative 3rd person plural
+
+# VERBS COMMON CONJUGATIONS pluralized first level
+# (copy the compatible variants from /v above)
+#SFX flag strip add match
+
+## the double ## below means version 2: not yuya|nariku|na but yuya|RINAKU|na
+# could be this is correct for other verbs...
+
+SFX w Y 27
+SFX w 0 na//+p na            # AMONGST~ stem/Infinitive
+SFX w 0 rina//+p na          # AMONGST~ reflexive
+SFX w 0 rimuna//+p na        # AMONGST~ reflexive "arriving ~ing"
+SFX w 0 richina//+p na       # AMONGST~ reflexive "make ~"
+SFX w 0 rigrina//+p na       # AMONGST~ reflexive "going to ~"
+SFX w 0 rinacuna//+p na      ## AMONGST~ reflexive "constantly ~"
+SFX w 0 grina//+p na         # AMONGST~ "going to ~"
+SFX w 0 rana//+p na          # AMONGST~ "always ~"
+SFX w 0 riyana//+p na        # AMONGST~ "always ~"
+SFX w 0 cuna//+p na          # AMONGST~ "constantly ~"
+SFX w 0 cumuna//+p na        # AMONGST~ "constantly arriving doing ~"
+SFX w 0 cumurina//+p na      # AMONGST~ "constantly arriving doing ~ reflexiwe"
+SFX w 0 cuchina//+p na       # AMONGST~ "constantly make ~"
+SFX w 0 cugrina//+p na       # AMONGST~ "constantly going to ~"
+SFX w 0 nacugrina//+p na     # AMONGST~ "constantly going to ~"
+SFX w 0 muna//+p na          # AMONGST~ "arriving ~ing"
+SFX w 0 muhuana//+p na        # AMONGST~ "arriving ~ing in my fawor"
+SFX w 0 mugrina//+p na       # AMONGST~ "going to arrive ~ing" 
+SFX w 0 mucuna//+p na        # AMONGST~ "constantly arriving ~ing"
+SFX w 0 wana//+p na          # AMONGST~ "doing ~ in my favor"
+SFX w 0 china//+p na         # AMONGST~ "make ~"
+SFX w 0 chihuana//+p na       # AMONGST~ "make ~ in my favor"
+SFX w 0 chirina//+p na       # AMONGST~ "make ~ for oneself"
+SFX w 0 chicuna//+p na       # AMONGST~ "constantly making ~"
+SFX w 0 chigrina//+p na      # AMONGST~ "going to make ~"
+SFX w 0 chimuna//+p na       # AMONGST~ "arriving making ~"
+SFX w 0 chimucuna//+p na       # AMONGST~ "arriving making ~"
+
+
+# VERBS COMMON CONJUGATIONS pluralized second level
+SFX p Y 43                # Verbs: conjugations and the like
+SFX p na na//+ na          # Pluralized infinitive
+SFX p na ngui//+ na         # Present 2nd person singular | Future 2nd person singular/plural plur
+SFX p na n//+ na           # Present 3rd person singular plur
+SFX p na nchij//+ na       # Present 1st person plural plur
+SFX p na nguichij//+ na     # Present 2nd person plural plur
+SFX p na ncuna//+ na       # Present 3nd person plural plur
+SFX p na nga//+ na         # Future 3rd person singular/plural plur
+SFX p na shun//+ na        # Future / Imperative 1st person plural plur
+SFX p na shunchij//+ na    # Future 1st person plural ("all of us") plur
+SFX p na shunchi/x na      # Future 1st person plural ("all of us") j->g case flagged a in dic XXX x flag doesnt' work
+SFX p na rcangui//+ na      # Past 2nd person singular plur
+SFX p na rca//+ na         # Past 3rd person singular plur
+SFX p na rcanchij//+ na    # Past 1st person plural plur
+SFX p na rcanguichij//+ na  # Past 2nd person plural plur
+SFX p na rcacuna//+ na     # Past 3nd person plural plur
+SFX p na ngapaj//+ na      # for/to plur
+SFX p na shpaca//+ na      # Contitional same person plur
+SFX p na j//+ na           # Personification
+SFX p na jpi//+ na         # Contitional other person plur
+SFX p na rcajpi//+ na      # Conditional Past 3rd person singular plur
+SFX p na yuj//+ na         # The person having nounified ~ plur
+SFX p na nayay//+ na       # Cuausing ~ plur
+SFX p na chun//+ na        # Imperative 3rd person singular / Present subjunctive plur
+SFX p na ichij//+ na     # Imperative 2nd person plural plur ending in "I"
+SFX p na ichi/x na      # Imperative 2nd person plural not ending in "I" + ", PUES" special j->g case
+SFX p na chuncuna//+ na    # Imperative 3rd person plural plur
+SFX p na i//+ [^i]na       # Nounification "amongst us" ending in I
+SFX p ina i//+ ina       # Nounification "amongst us" not ending in I
+SFX p na shcani//+ na      # Perfect 1st person singular plur
+SFX p na shcangui//+ na     # Perfect 2nd person singular plur
+SFX p na shca//+ na        # Perfect 3rd person singular plur
+SFX p na shcanchij//+ na   # Perfect 1st person plural plur
+SFX p na shcanguichij//+ na # Perfect 2nd person plural plur
+SFX p na shcacuna//+ na    # Perfect 3rd person plural plur
+SFX p na shcarca//+ na     # Plusperfect [persons?] plur
+SFX p na shpa//+ na        # Gerund same person. plur
+SFX p na shcanga//+ na     # Was going to ~ plur
+SFX p na panchij//+ na     # POLITE Present 1st person plural plur
+SFX p na panguichij//+ na   # POLITE Present 2nd person plural plur
+SFX p na pashun//+ na      # POLITE Future 1st person plural plur
+SFX p na pachun//+ na      # POLITE Imperative 3rd person singular / Present subjunctive plur
+SFX p na paichij//+ na     # POLITE Imperative 2nd person plural plur
+SFX p na pachuncuna//+ na  # POLITE Imperative 3rd person plural plur
